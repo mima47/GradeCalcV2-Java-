@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.marapps.controllers.DashboardController">
+    <padding>
+        <Insets bottom="10" left="10" right="10" top="10" />
+    </padding>
+
+
+    <MenuBar fx:id="menubar" prefWidth="3840">
+        <Menu mnemonicParsing="false" text="User">
+            <MenuItem mnemonicParsing="false" onAction="#logout" text="Log out" />
+        </Menu>
+    </MenuBar>
+</AnchorPane>

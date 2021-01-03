@@ -1,6 +1,8 @@
 package com.marapps.api;
 
-public class Institute {
+import java.io.Serializable;
+
+public class Institute implements Serializable {
     int instituteId;
     String instituteCode;
     String name;
@@ -21,7 +23,7 @@ public class Institute {
         System.out.println("informationImageUrl: " + informationImageUrl);
         System.out.println("informationUrl: " + informationUrl);
         System.out.println("----------------------------");
-        System.out.println("");
+        System.out.println();
     }
 
     public int getInstituteId() {

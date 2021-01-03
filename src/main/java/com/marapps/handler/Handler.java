@@ -4,18 +4,28 @@ import com.marapps.api.Institute;
 import com.marapps.api.Kreta;
 import com.marapps.api.Mapper;
 import com.marapps.api.Token;
+import com.marapps.models.User;
 
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+//This is the file responsible for connecting different classes and passing data between them.
+//Hence the static variables
 
 public class Handler {
 
     Mapper mapper = new Mapper();
     Kreta kreta = new Kreta();
     List<Institute> INSTITUTES = mapper.map_institute_list(kreta.get_school_list());
+
+    static public Institute selectedInstitute = null;
+    static public String username;
+    static public String password;
+    static public Token token;
+    static public User loggedInUser;
+
 
     public List<Institute> search_institute(String searchTerm){
         List<Institute> list = INSTITUTES;
@@ -37,9 +47,9 @@ public class Handler {
         return instNamesList;
     }
 
-    public String login(String username, String password, Institute institute){
+    public Token login(User user){
         return mapper.map_token(
-          kreta.get_tokens(username, password, institute.getInstituteCode())
-        ).getAccess_token();
+          kreta.get_tokens(user.getUsername(), user.getPassword(), user.getInstitute().getInstituteCode())
+        );
     }
 }
