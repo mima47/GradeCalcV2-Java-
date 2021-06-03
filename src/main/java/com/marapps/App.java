@@ -35,19 +35,19 @@ public class App extends Application {
             System.out.println("Class not found");
             e.printStackTrace();
         }
-        if (!user.getStayLoggedIn()) {
+        if (user.getStayLoggedIn()) {
+            scene = new Scene(loadFXML("fxml/dashboard"), 500, 250);
+            stage.setScene(scene);
+            stage.setTitle("Dashboard");
+        } else {
             scene = new Scene(loadFXML("fxml/login"), 500, 350);
             stage.setScene(scene);
             stage.setTitle("Login");
-        } else {
-            scene = new Scene(loadFXML("fxml/dashboard"), 500, 350);
-            stage.setScene(scene);
-            stage.setTitle("Dashboard");
         }
         stage.show();
     }
 
-    private static Parent loadFXML(String fxml) throws IOException {
+    public static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }

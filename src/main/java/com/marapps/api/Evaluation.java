@@ -1,12 +1,17 @@
 package com.marapps.api;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.time.LocalDateTime;
 import java.util.Map;
 
 public class Evaluation {
     String ErtekeloTanarNeve;
     Map<String, String> ErtekFajta;
     String Jelleg;
-    String KeszitesDatuma;
+    public String KeszitesDatuma;
+    @JsonIgnore
+    public LocalDateTime KeszitesDatumaParsed = null;
     String LattamozasDatuma;
     Map<String, String> Mod;
     String RogzitesDatuma;
@@ -20,6 +25,14 @@ public class Evaluation {
     Map<String, String> OsztalyCsoport;
     int SortIndex;
     String Uid;
+
+    public LocalDateTime getKeszitesDatumaParsed() {
+        return KeszitesDatumaParsed;
+    }
+
+    public void setKeszitesDatumaParsed(LocalDateTime keszitesDatumaParsed) {
+        KeszitesDatumaParsed = keszitesDatumaParsed;
+    }
 
     public String getErtekeloTanarNeve() {
         return ErtekeloTanarNeve;

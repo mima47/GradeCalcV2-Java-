@@ -1,12 +1,10 @@
 package com.marapps.handler;
 
-import com.marapps.api.Institute;
-import com.marapps.api.Kreta;
-import com.marapps.api.Mapper;
-import com.marapps.api.Token;
+import com.marapps.api.*;
 import com.marapps.models.User;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,5 +49,81 @@ public class Handler {
         return mapper.map_token(
           kreta.get_tokens(user.getUsername(), user.getPassword(), user.getInstitute().getInstituteCode())
         );
+    }
+
+    public static int calculate(List<Evaluation> evaluationList){
+        List<Integer> evalValues = new ArrayList<>();
+        int sum = 0;
+
+        for (Evaluation eval : evaluationList){
+            int value = 100;
+            int weight = eval.getSulySzazalekErteke() / 100;
+
+            switch (eval.getSzamErtek()){
+                case 5:
+                    value = value*5*weight;
+                    evalValues.add(value);
+                    break;
+
+                case 4:
+                    value = value*4*weight;
+                    evalValues.add(value);
+                    break;
+
+                case 1:
+                    value = value*10*weight;
+                    value *= -1;
+                    evalValues.add(value);
+                    break;
+            }
+            System.out.println("Subject: "+eval.getTantargy());
+            System.out.println("Weight: "+eval.getSulySzazalekErteke());
+            System.out.println("Weight/100: "+weight);
+            System.out.println("Number: "+eval.getSzamErtek());
+            System.out.println("Value: "+value);
+            System.out.println("");
+        }
+        for (int i : evalValues){
+            sum += i;
+        }
+        return sum;
+    }
+
+    // Returns a list with evaluations from the month before now.
+    public static  List<Evaluation> beforeMonth(List<Evaluation> evaluationList) {
+        LocalDate nowDate = LocalDate.now();
+        LocalDate fromMonth = LocalDate.of(nowDate.getYear(), nowDate.getMonthValue() - 2, 1);
+        LocalDate fromDate = LocalDate.of(nowDate.getYear(), nowDate.getMonthValue() - 2, fromMonth.lengthOfMonth());
+        LocalDate toDate = LocalDate.of(nowDate.getYear(), nowDate.getMonthValue(), 1);
+
+        // Filtering
+        return evaluationList.stream()
+                .filter(
+                        item -> item.getKeszitesDatumaParsed().toLocalDate().isAfter(fromDate)
+                                && item.getKeszitesDatumaParsed().toLocalDate().isBefore(toDate)
+                )
+                .collect(Collectors.toList());
+    }
+
+    // Returns a list with evaluations from this month.
+    public static  List<Evaluation> thisMonth(List<Evaluation> evaluationList) {
+        LocalDate nowDate = LocalDate.now();
+        LocalDate fromDate = LocalDate.of(nowDate.getYear(), nowDate.getMonthValue() - 1, 31);
+
+        // Filtering
+        return evaluationList.stream()
+                .filter(
+                        item -> item.getKeszitesDatumaParsed().toLocalDate().isAfter(fromDate)
+                )
+                .collect(Collectors.toList());
+
+    }
+
+    public static  List<Evaluation> customMonth(List<Evaluation> evaluationList, LocalDate fromDate, LocalDate toDate){
+        return evaluationList.stream().filter(
+                item -> item.getKeszitesDatumaParsed().toLocalDate().isAfter(fromDate)
+                        && item.getKeszitesDatumaParsed().toLocalDate().isBefore(toDate)
+        )
+                .collect(Collectors.toList());
     }
 }

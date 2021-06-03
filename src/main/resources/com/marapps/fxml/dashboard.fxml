@@ -3,16 +3,35 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.marapps.controllers.DashboardController">
-    <padding>
-        <Insets bottom="10" left="10" right="10" top="10" />
-    </padding>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.marapps.controllers.DashboardController">
+   <top>
+       <MenuBar fx:id="menubar" BorderPane.alignment="CENTER">
+           <Menu mnemonicParsing="false" text="User">
+               <MenuItem mnemonicParsing="false" onAction="#logout" text="Logout" />
+           </Menu>
+       </MenuBar>
+   </top>
+   <center>
+       <GridPane alignment="CENTER" hgap="5" vgap="5" BorderPane.alignment="CENTER">
+           <padding><Insets bottom="25" left="25" right="25" top="25" /></padding>
+           <Label fx:id="moneyLabel" text="Money" GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <font>
+               <Font size="72.0" />
+            </font>
+           </Label>
+       </GridPane>
+   </center>
+    <right>
+        <VBox alignment="CENTER" spacing="10">
+            <padding><Insets bottom="25" left="25" right="25" top="25" /></padding>
+            <Button text="This Month" onAction="#thisMonthButtonAction">
 
+            </Button>
+            <Button text="Last Month" onAction="#lastMonthButtonAction">
 
-    <MenuBar fx:id="menubar" prefWidth="3840">
-        <Menu mnemonicParsing="false" text="User">
-            <MenuItem mnemonicParsing="false" onAction="#logout" text="Log out" />
-        </Menu>
-    </MenuBar>
-</AnchorPane>
+            </Button>
+        </VBox>
+    </right>
+</BorderPane>
