@@ -1,28 +1,26 @@
 package com.marapps.controllers;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.Objects;
-
 import com.marapps.App;
 import com.marapps.handler.Handler;
-
 import com.marapps.models.User;
+import com.marapps.threads.Serialize;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-public class LoginController {
+import java.io.IOException;
 
+public class LoginController{
+
+    public GridPane gridPane;
+    public HBox loadBox;
     @FXML CheckBox stayLoggedInCheck;
     @FXML Button instituteButton;
     @FXML TextField userField;
@@ -30,6 +28,7 @@ public class LoginController {
 
     @FXML
     public void handleSubmitButtonAction() {
+        //TODO: Implement loading indicator (doesn't have to indicate progress)
         Parent root;
 
         //Check if text fields are empty
@@ -37,12 +36,15 @@ public class LoginController {
         if (userField.getText().equals("") || passwordField.getText().equals("") || Handler.selectedInstitute == null) {
             userField.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
             passwordField.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
-        } else {
-            serialize();
+
+            // Check if login information is correct
+        } else if (isLoginCorrect()){
+
+            serializeInThread();
 
             //After serialization open the dashboard
             try {
-                root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/marapps/fxml/dashboard.fxml")));
+                root = App.loadFXML("fxml/dashboard");
                 Stage stage = new Stage();
                 stage.setTitle("Dashboard");
                 stage.setScene(new Scene(root, 500, 250));
@@ -52,33 +54,37 @@ public class LoginController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            // if login information is incorrect, make the textfields red
+        } else {
+            userField.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
+            passwordField.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
         }
     }
-
-    public void serialize() {
+    public boolean isLoginCorrect(){
         User user = new User();
+        Handler handler = new Handler();
 
         user.setUsername(userField.getText());
         user.setPassword(passwordField.getText());
         user.setInstitute(Handler.selectedInstitute);
         user.setStayLoggedIn(stayLoggedInCheck.isSelected());
 
-        Handler.username = user.getUsername();
-        Handler.password = user.getPassword();
-        //The institute variable in Handler is already defined at SelectInstituteController
+        return handler.login(user) != null;
+    }
 
-        //Serialize
-        try {
-            FileOutputStream fileOutputStream = new FileOutputStream("src/main/resources/com/marapps/serial/login.ser");
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(user);
-            objectOutputStream.close();
-            fileOutputStream.close();
+    public void serializeInThread() {
+        User user = new User();
+        user.setUsername(userField.getText());
+        user.setPassword(passwordField.getText());
+        user.setInstitute(Handler.selectedInstitute);
+        user.setStayLoggedIn(stayLoggedInCheck.isSelected());
 
-        } catch (IOException e){
-            e.printStackTrace();
+        Runnable run = new Serialize(user);
+        Thread thread = new Thread(run);
+        thread.start();
+        while (thread.isAlive()){
+            System.out.println("Serializing...");
         }
-        Handler.loggedInUser = user;
     }
 
     //Open institue select screen
@@ -88,7 +94,7 @@ public class LoginController {
 
         try {
 //            root = FXMLLoader.load(getClass().getResource("/com/marapps/fxml/selectInstitute.fxml"));
-            root = App.loadFXML("/com/marapps/fxml/selectInstitute");
+            root = App.loadFXML("fxml/selectInstitute");
             Stage stage = new Stage();
             stage.setTitle("Select Institute");
             stage.setScene(new Scene(root, 640, 480));

@@ -16,22 +16,57 @@
    <center>
        <GridPane alignment="CENTER" hgap="5" vgap="5" BorderPane.alignment="CENTER">
            <padding><Insets bottom="25" left="25" right="25" top="25" /></padding>
-           <Label fx:id="moneyLabel" text="Money" GridPane.columnIndex="0" GridPane.rowIndex="0">
+           <Label fx:id="moneyLabel" text="Money" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="0">
             <font>
-               <Font size="72.0" />
+               <Font name="Calibri" size="96.0" />
             </font>
            </Label>
+
+           <Button onAction="#moreInfo" userData="fxml/evaluationListScreen" text="More Info..." GridPane.columnIndex="0" GridPane.rowIndex="1" />
+           <VBox alignment="CENTER" spacing="10" GridPane.columnIndex="1">
+               <padding>
+               <Insets bottom="25" left="25" right="25" top="25" />
+            </padding>
+               <Button onAction="#thisMonthButtonAction" text="This Month">
+
+            </Button>
+               <Button onAction="#lastMonthButtonAction" text="Last Month">
+
+            </Button>
+           </VBox>
+         <columnConstraints>
+            <ColumnConstraints maxWidth="400.0" minWidth="300.0" prefWidth="300.0" />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
        </GridPane>
    </center>
-    <right>
-        <VBox alignment="CENTER" spacing="10">
-            <padding><Insets bottom="25" left="25" right="25" top="25" /></padding>
-            <Button text="This Month" onAction="#thisMonthButtonAction">
-
-            </Button>
-            <Button text="Last Month" onAction="#lastMonthButtonAction">
-
-            </Button>
-        </VBox>
-    </right>
+   <bottom>
+       <TabPane maxHeight="200.0" maxWidth="600.0" minHeight="200.0" minWidth="600.0" prefHeight="200.0"
+                prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+           <Tab text="Half-year">
+               <GridPane alignment="CENTER">
+                   <Label text="Money" GridPane.columnIndex="0" GridPane.rowIndex="0" fx:id="halfYearMoneyLabel">
+                       <font>
+                           <Font name="calibri" size="96.0" />
+                       </font>
+                   </Label>
+                   <Button text="More info..." onAction="#moreInfo" userData="fxml/halfYearEvalList" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+               </GridPane>
+           </Tab>
+           <Tab text="End-year">
+               <GridPane alignment="CENTER">
+                   <Label text="Money" GridPane.columnIndex="0" GridPane.rowIndex="0" fx:id="endYearMoneyLabel">
+                       <font>
+                           <Font name="calibri" size="96.0" />
+                       </font>
+                   </Label>
+                   <Button text="More info..." onAction="#moreInfo" userData="fxml/halfYearEvalList" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+               </GridPane>
+           </Tab>
+       </TabPane>
+   </bottom>
 </BorderPane>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<BorderPane prefHeight="50.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/11.0.1">
+   <top>
+      <Label text="No internet connection!" textAlignment="CENTER" BorderPane.alignment="CENTER" />
+   </top>
+   <bottom>
+      <Label text="Close this window to exit the application..." BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>

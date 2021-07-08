@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.marapps.controllers.EvaluationListScreenController">
+    <padding><Insets bottom="10" left="25" right="25" top="25" /></padding>
+
+    <ListView fx:id="listView" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+
+    <VBox maxHeight="-Infinity" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+
+        <Label alignment="BOTTOM_LEFT" text="Evaluation: " />
+        <Label alignment="BOTTOM_LEFT" text="Weight: " />
+        <Label alignment="BOTTOM_LEFT" text="Subject: " />
+        <Label alignment="BOTTOM_LEFT" text="Description: " />
+        <Label alignment="BOTTOM_LEFT" text="Type: " />
+        <Label alignment="BOTTOM_LEFT" text="Date: " />
+    </VBox>
+    <VBox fx:id="vbox" maxHeight="-Infinity" minWidth="50.0" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+
+        <Label fx:id="evalLabel" alignment="BOTTOM_LEFT" />
+        <Label fx:id="weightLabel" alignment="BOTTOM_LEFT" />
+        <Label fx:id="subjectLabel" alignment="BOTTOM_LEFT" />
+        <Label fx:id="descriptionLabel" alignment="BOTTOM_LEFT" />
+        <Label fx:id="typeLabel" alignment="BOTTOM_LEFT" />
+        <Label fx:id="dateLabel" alignment="BOTTOM_LEFT" />
+    </VBox>
+   <columnConstraints>
+      <ColumnConstraints maxWidth="450.0" minWidth="450.0" prefWidth="450.0" />
+      <ColumnConstraints maxWidth="70.0" minWidth="70.0" prefWidth="70.0" />
+      <ColumnConstraints maxWidth="200.0" minWidth="200.0" prefWidth="200.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>
