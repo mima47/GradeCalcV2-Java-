@@ -59,8 +59,6 @@ public class DashboardController {
         // Filter out non-wanted subjects
         List<Evaluation> filteredEval = evaluationList.stream()
                 .filter(item -> !excludedSubjects.contains(((Map)item.getTantargy().get("Kategoria")).get("Nev")))
-//                .filter(item -> item.getTipus().get("Uid").contains("1519"))
-//                .filter(item -> item.getTipus().get("Uid").contains("1520"))
                 .collect(Collectors.toList());
         money = Handler.calculate(Handler.thisMonth(filteredEval));
 
