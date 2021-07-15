@@ -41,6 +41,7 @@ public class Handler {
         return instituteList.get(index);
     }
 
+    //Returns a string list with the names of all institutes
     public List<String> institute_name_list_string(){
         List<String> instNamesList = new ArrayList<>();
         List<Institute> instList = INSTITUTES;

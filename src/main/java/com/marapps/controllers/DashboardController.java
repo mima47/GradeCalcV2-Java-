@@ -36,7 +36,6 @@ public class DashboardController {
 
 
     public void initialize() {
-        Handler.token = handler.login(Handler.loggedInUser);
         Mapper mapper = new Mapper();
         Kreta kreta = new Kreta();
         int money;
@@ -44,6 +43,7 @@ public class DashboardController {
         int endYearMoney;
 
         // Get evaluation list
+
         this.evaluationList = mapper.map_evaluation(
                 kreta.get_student_evaluations(
                         Handler.token.getAccess_token(), Handler.loggedInUser.getInstitute().getUrl()
