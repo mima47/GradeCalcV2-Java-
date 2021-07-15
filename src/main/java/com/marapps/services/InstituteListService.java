@@ -23,10 +23,6 @@ public class InstituteListService extends Service<Void> {
         this.instituteButton = instituteButton;
     }
 
-    public final Button getInstituteButton(){
-        return instituteButton;
-    }
-
     public final void setLoadBox(HBox loadBox){
         this.loadBox = loadBox;
     }
@@ -37,10 +33,12 @@ public class InstituteListService extends Service<Void> {
             @Override
             protected Void call() {
                 loadBox.setVisible(true);
-                System.out.println("loadFxmlTask: Fired");
+                System.out.println("InstituteListService.call(): Fired");
                 Parent root;
                 try {
+                    System.out.println("Loading fxml/selectInstitute");
                     root = App.loadFXML("fxml/selectInstitute");
+                    System.out.println("Loaded");
                     Platform.runLater(() -> {
                         Stage stage = new Stage();
                         stage.setTitle("Select Institute");
